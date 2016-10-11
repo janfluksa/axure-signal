@@ -1,0 +1,6 @@
+{
+  "name": "Axure Socket.io Server",
+  "description": "Websocket server for Axure prototyping realtime apps on multiple devices",
+  "repository": "https://github.com/heroku-examples/node-socket.io",
+  "keywords": ["node", "websocket", "socket.io", "axure"]
+}

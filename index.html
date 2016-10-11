@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Axure Signal - Dashboard</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
+    crossorigin="anonymous">
+  </head>
+  <body>
+
+    <div class="container">
+
+
+      <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Axure Signal</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      
+      <form class="navbar-form navbar-left socket">
+        <div class="form-group">
+          <input type="text" id="signal-name" class="form-control" placeholder="Name">
+        </div>
+        <div class="form-group">
+          <input type="text" id="signal-message" class="form-control" placeholder="Value">
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-cloud-download"></span> GitHub</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Getting started <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+       
+            <li><a href="#">Axure Push notifications tutorial</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/signal/HTTP GET test/signal received via HTTP GET request" target="_blank">try HTTP Get request</a></li>            
+            <li><a onclick="javascript:$.get('/signal/jQuery.get() test/signal received via HTTP GET request');" style="cursor: pointer;">try jQuery $.get() submit</a></li>
+            <li role="separator" class="divider"></li>            
+            <li><a href="http://dejongh.dk/wiki/doku.php?id=interaction:axure_api" target="_blank">$axure object Manual</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+<div class="table-responsive">
+  <div class="panel panel-primary">
+ 
+    <div class="panel-heading">Listening changes in <b>signal</b> room (socket.io)</div>
+
+    <table class="table table-striped" id="signals">
+      <thead>
+        <tr>
+          <th style="width: 100px;">#counter</th>
+          <th style="width: 200px;">Signal Name</th>
+          <th>Message</th>
+          <th style="width: 150px; text-align: right;">Time delivered</th>
+        </tr>
+      </thead>
+     
+
+      <tbody>
+        
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+      var socket = io('http://localhost:3000/', { path: '/socket.io'});
+      
+      //make counter
+      $('body').append('<input id="counter" value="0">');
+      $('#counter').hide();
+
+      // get counter value and ++
+      var number = function() {
+        num = +$("#counter").val() + 1;
+        $("#counter").val(num);
+        return num;
+      };
+
+      var time = function () {
+        var today = new Date();
+        var h = today.getHours();if (h<10) h = "0"+h;
+        var m = today.getMinutes();if (m<10) m = "0"+m;
+        var s = today.getSeconds();if (s<10) s = "0"+s;    
+        return h + ":" + m + ":" +s;
+      }
+      
+      $('form.socket').submit(function(){
+
+        // send object to room "signal"      
+        socket.emit('signal', { "signal": $("#signal-name").val(), "message": $("#signal-message").val()} );
+
+        // clear form
+        $("#signal-name").val("");
+        $("#signal-message").val("");
+
+        return false;
+      });
+
+      socket.on('signal', function(data){
+        var row = "";
+        row += '<td>' +number()+ '</td>';
+        row += '<td>' +data.signal+ '</td>';
+        row += '<td>' +data.message+ '</td>';
+        row += '<td style="text-align: right;">' +time()+ '</td>';      
+        
+        $('#signals tbody').prepend($('<tr>' +row+ '</tr>'));
+      });
+
+    </script>
+
+
+  </body>
+</html>
