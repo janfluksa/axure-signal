@@ -9,8 +9,8 @@ const INDEX = path.join(__dirname, 'index.html');
 
 const app = express();
 
-const server = app.listen(PORT, () => {  
-  console.log('listening on *:' + PORT);
+const server = app.listen(PORT, () => {   
+  console.log('\x1b[36m' + ' Axure signal' + '\x1b[0m \n ------------\n listening on http://localhost:' + PORT + '\n');
 });
 
 app.use(express.static('static'));
