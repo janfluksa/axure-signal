@@ -9,13 +9,14 @@ const INDEX = path.join(__dirname, 'index.html');
 
 const app = express();
 
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, () => {  
   console.log('listening on *:' + PORT);
 });
 
 app.use(express.static('static'));
 
 const io = socketIO(server);
+
 
     
 io.on('connection', function(socket){
@@ -30,11 +31,14 @@ io.on('connection', function(socket){
 });
 
 app.all("/", (req,res) => {
+
+  res.header('Access-Control-Allow-Origin', '*');
   res.sendFile(path.join(__dirname + '/index.html'));
 });
 
 app.get('/signal/:signal/:message', (req, res) => {
 
+  res.header('Access-Control-Allow-Origin', '*');
   var change = {"signal": req.params.signal, "message": req.params.message};
 
   io.emit('signal', change);
@@ -46,6 +50,7 @@ app.get('/signal/:signal/:message', (req, res) => {
 
 app.get('/signal/:signal', (req, res) => {
 
+  res.header('Access-Control-Allow-Origin', '*');
   var change = {"signal": req.params.signal, "message": "ok"};
 
   io.emit('signal', change);
