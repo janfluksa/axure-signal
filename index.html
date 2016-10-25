@@ -47,10 +47,9 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Getting started <span class="caret"></span></a>
           <ul class="dropdown-menu">
        
-            <li><a target="_blank" href="https://github.com/janfluksa/axure-signal/wiki">Quick start<span style="font-size: 10px; transform: translateY(-5px);" class="glyphicon glyphicon-new-window"></span></a></li>
+            <li><a target="_blank" href="https://github.com/janfluksa/axure-signal/wiki">Quick start <span style="font-size: 10px; transform: translateY(-5px);" class="glyphicon glyphicon-new-window"></span></a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/signal/HTTP GET/Test signal" target="_blank">Send GET <span style="font-size: 10px; transform: translateY(-5px);" class="glyphicon glyphicon-new-window"></span></a></li>            
-            <li><a onclick="javascript:$.get('/signal/HTTP GET (ajax)/Test signal');" style="cursor: pointer;">Send GET <span style="font-size: 10px;  position: relative; font-weight: 900;  top: -5px;" >[AJAX]</span> </a></li>
+            <li><a onclick='javascript:$.post("/",{"signal":"ajax","message":"text message by http post"});' style="cursor: pointer;">Send POST <span style="font-size: 10px;  position: relative; font-weight: 900;  top: -5px;" >[AJAX]</span> </a></li>
             <li role="separator" class="divider"></li>            
             <li><a href="http://dejongh.dk/wiki/doku.php?id=interaction:axure_api" target="_blank">$axure js manual <span style="font-size: 10px; transform: translateY(-5px);" class="glyphicon glyphicon-new-window"></span></a></li>
           </ul>
