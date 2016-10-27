@@ -24,7 +24,7 @@ io.on('connection', function(socket){
   socket.on('signal', function(msg){
     if (msg.signal) { 
 
-      if (msg.message) { var message = req.body.message; }
+      if (msg.message) { var message = msg.message; }
       else { var message = null; }
 
       io.emit('signal', msg); 
