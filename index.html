@@ -93,7 +93,7 @@
     <script src="/socket.io/socket.io.js"></script>
 
     <script>
-      var socket = io('http://localhost:3000/', { path: '/socket.io'});
+      var socket = io(location.href, { path: '/socket.io'});
       
       //make counter
       $('body').append('<input id="counter" value="0">');
